@@ -1,17 +1,74 @@
 package main
 
 import (
+	"fmt"
 	"testing"
 	"time"
 )
 
+func Test_FailNow_로그출력_X_다음코드_실행_X(t *testing.T) {
+	actual := greet("abhishek")
+	expected := "hello, abhishek"
+	if actual != expected {
+		t.FailNow()
+	}
+	fmt.Println("다음 코드 실행 안함")
+}
+
+func Test_Fatal_로그출력_O_다음코드_실행_X(t *testing.T) {
+	actual := greet("abhishek")
+	expected := "hello, abhishek"
+	if actual != expected {
+		t.Fatal("fatal은 로그를 출력할 수 있음") //나머지는 FailNow()와 같음
+	}
+	fmt.Println("다음 코드 실행 안함")
+}
+
+func Test_Fail_로그출력_X_다음코드_실행_O(t *testing.T) {
+	actual := greet("abhishek")
+	expected := "hello, abhishek"
+	if actual != expected {
+		t.Fail()
+	}
+	fmt.Println("다음 코드 실행함")
+}
+
+func Test_Error_로그출력_O_다음코드_실행_O(t *testing.T) {
+	actual := greet("abhishek")
+	expected := "hello, abhishek"
+	if actual != expected {
+		t.Error("Error는 로그를 출력할 수 있음") //나머지는 Fail() 메서드와 같음
+	}
+	fmt.Println("다음 코드 실행함")
+}
+
+func Test_Log_로그출력_O_다음코드_실행_O(t *testing.T) {
+	actual := greet("abhishek")
+	expected := "hello, abhishek"
+	if actual != expected {
+		t.Log("로그를 출력할 수 있음")
+	}
+	fmt.Println("다음 코드 실행함")
+}
+
+func Test_Failed_로그출력_X_다음코드_실행_O(t *testing.T) {
+	actual := greet("abhishek")
+	expected := "hello, abhishek"
+	if actual != expected {
+		t.Failed() //실패하더라도 리포트하지 않음
+	}
+	fmt.Println("다음 코드 실행함")
+}
+
 //simple test
 func TestGreet(t *testing.T) {
 	actual := greet("abhishek")
-	expected := "hello, abhishek!"
+	expected := "hello, abhishek"
 	if actual != expected {
-		t.Errorf("expected %s, but was %s", expected, actual)
+		//t.Errorf("expected %s, but was %s", expected, actual)
+		t.Fail()
 	}
+	fmt.Println("end")
 }
 
 func TestGreet_(t *testing.T) {
